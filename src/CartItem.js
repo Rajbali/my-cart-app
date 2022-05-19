@@ -8,6 +8,7 @@ export default class cartItem extends Component {
       title: "Xaomi Pad 5",
       qty: 1,
       img: "",
+      totalprice: 26999,
     };
     //2nd way to data Binding
     // this.increaseQty = this.increaseQty.bind(this);
@@ -15,12 +16,42 @@ export default class cartItem extends Component {
   // 3rd Way will automatically bind the value of this using arrow function
   increaseQty = () => {
     console.log("state", this.state);
+
+    // 1st Way of using setState function
+    // this.setState({
+    //   qty: this.state.qty + 1,
+    //   totalprice: this.state.totalprice + 26999,
+    // });
+
+    // 2nd Way of using setState function
+    this.setState((prevState) => {
+      return {
+        qty: prevState.qty + 1,
+        totalprice: prevState.totalprice + 26999,
+      };
+    });
+
+    //   qty: this.state.qty + 1,
+    //   totalprice: this.state.totalprice + 26999,
+    // });
   };
+
+  decreaseQty = () => {
+    console.log("state", this.state);
+    this.setState((prevState) => {
+      return {
+        qty: prevState.qty <= 0 ? 0 : prevState.qty - 1,
+        totalprice:
+          prevState.totalprice <= 0 ? 0 : prevState.totalprice - 26999,
+      };
+    });
+  };
+
   // increaseQty() {
   //   console.log("state", this.state);
   // }
   render() {
-    const { price, title, qty } = this.state;
+    const { price, title, qty, img, totalprice } = this.state;
     return (
       <div className="cart-item">
         <div className="left-block">
@@ -42,6 +73,7 @@ export default class cartItem extends Component {
               alt="minus"
               className="action-icons"
               src="https://cdn-icons.flaticon.com/png/512/2569/premium/2569198.png?token=exp=1652972044~hmac=b09c9f519a42effde57c05bea8333d93"
+              onClick={this.decreaseQty}
             />
             <img
               alt="delete"
@@ -50,6 +82,7 @@ export default class cartItem extends Component {
             />
           </div>
         </div>
+        <div style={{ color: "#777" }}>Total: Rs {totalprice}</div>
       </div>
     );
   }
