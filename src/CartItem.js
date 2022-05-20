@@ -15,7 +15,7 @@ export default class cartItem extends Component {
   }
   // 3rd Way will automatically bind the value of this using arrow function
   increaseQty = () => {
-    console.log("state", this.state);
+    // console.log("state", this.state);
 
     // 1st Way of using setState function
     // this.setState({
@@ -24,12 +24,17 @@ export default class cartItem extends Component {
     // });
 
     // 2nd Way of using setState function
-    this.setState((prevState) => {
-      return {
-        qty: prevState.qty + 1,
-        totalprice: prevState.totalprice + 26999,
-      };
-    });
+    this.setState(
+      (prevState) => {
+        return {
+          qty: prevState.qty + 1,
+          totalprice: prevState.totalprice + 26999,
+        };
+      },
+      () => {
+        console.log("this.state", this.state);
+      }
+    );
 
     //   qty: this.state.qty + 1,
     //   totalprice: this.state.totalprice + 26999,
@@ -37,10 +42,14 @@ export default class cartItem extends Component {
   };
 
   decreaseQty = () => {
+    const { qty } = this.state;
+    if (qty == 0) {
+      return;
+    }
     console.log("state", this.state);
     this.setState((prevState) => {
       return {
-        qty: prevState.qty <= 0 ? 0 : prevState.qty - 1,
+        qty: prevState.qty - 1,
         totalprice:
           prevState.totalprice <= 0 ? 0 : prevState.totalprice - 26999,
       };
